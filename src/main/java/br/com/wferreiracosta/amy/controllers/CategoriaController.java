@@ -1,10 +1,10 @@
-package br.com.wferreiracosta.amy.repositories;
+package br.com.wferreiracosta.amy.controllers;
 
 import br.com.wferreiracosta.amy.models.Categoria;
 
 import java.util.List;
 
-public interface CategoriaRepository {
+public interface CategoriaController {
 
     public List<Categoria> findAll();
 
