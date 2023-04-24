@@ -8,4 +8,6 @@ public interface CategoriaController {
 
     public List<Categoria> findAll();
 
+    public Categoria findById(Long id);
+
 }

@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface CategoriaService {
 
-    List<Categoria> findAll();
+    public List<Categoria> findAll();
+
+    public Categoria findById(Long id);
 
 }

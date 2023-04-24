@@ -9,12 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,7 +24,7 @@ public class CategoriaControllerTest {
     private CategoriaController categoriaController;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         categoriaController = new CategoriaControllerImpl(categoriaService);
     }
 
@@ -50,6 +48,21 @@ public class CategoriaControllerTest {
         Assertions.assertEquals(listCategorias.size(), returnCategorias.size());
         Assertions.assertEquals(listCategorias.get(0), returnCategorias.get(0));
         Assertions.assertEquals(listCategorias.get(1), returnCategorias.get(1));
+    }
+
+    @Test
+    public void testingFindByIdReturnCategoria() {
+        final var informatica = Categoria.builder()
+                .id(1L)
+                .nome("Informatica")
+                .build();
+
+        when(categoriaService.findById(informatica.getId())).thenReturn(informatica);
+
+        final var returnCategoria = categoriaController.findById(informatica.getId());
+
+        assertEquals(informatica.getId(), returnCategoria.getId());
+        assertEquals(informatica.getNome(), returnCategoria.getNome());
     }
 
 }

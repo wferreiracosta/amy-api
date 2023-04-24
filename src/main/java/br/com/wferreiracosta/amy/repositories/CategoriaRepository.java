@@ -7,5 +7,6 @@ import java.util.List;
 public interface CategoriaRepository {
 
     public List<Categoria> findAll();
+    public Categoria findById(Long id);
 
 }
