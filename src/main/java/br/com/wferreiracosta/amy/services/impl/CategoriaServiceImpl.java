@@ -44,4 +44,17 @@ public class CategoriaServiceImpl implements CategoriaService {
         return categoria;
     }
 
+    @Override
+    public List<Categoria> findByProdutoId(Long id) {
+        final var categorias = categoriaRepository.findByProdutoId(id);
+
+        if (categorias.isEmpty()) {
+            final var message = format("Não foi encontrada Categoria com esse id %s de Produto", id);
+            log.error(message);
+            throw new ObjectNotFoundException(message);
+        }
+
+        return categorias;
+    }
+
 }

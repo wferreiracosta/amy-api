@@ -10,4 +10,6 @@ public interface CategoriaService {
 
     public Categoria findById(Long id);
 
+    public List<Categoria> findByProdutoId(Long id);
+
 }
