@@ -8,7 +8,7 @@ services:
     image: mysql:5.6
     ports:
       - "3306:3306"
-    container_name: amy-mysql
+    container_name: mysql
     volumes:
       - data:/var/lib/mysql
     environment:
@@ -16,7 +16,7 @@ services:
       - MYSQL_DATABASE=amy
       
   phpmyadmin:
-    container_name: amy-phpmyadmin
+    container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin:latest
     links:
       - mysql
