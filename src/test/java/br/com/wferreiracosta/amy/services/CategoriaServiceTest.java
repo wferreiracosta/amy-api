@@ -81,4 +81,41 @@ public class CategoriaServiceTest {
 
     }
 
+    @Test
+    public void testingFindByProdutoIdReturnCategorias() {
+        final var id = 1L;
+
+        final var informatica = Categoria.builder()
+                .id(1L)
+                .nome("Informatica")
+                .build();
+
+        final var roupa = Categoria.builder()
+                .id(2L)
+                .nome("Roupa")
+                .build();
+        final var listCategorias = List.of(informatica, roupa);
+
+        when(categoriaRepository.findByProdutoId(id)).thenReturn(listCategorias);
+
+        final var returnCategorias = categoriaService.findByProdutoId(id);
+
+        assertEquals(listCategorias.size(), returnCategorias.size());
+        assertEquals(listCategorias.get(0), returnCategorias.get(0));
+        assertEquals(listCategorias.get(1), returnCategorias.get(1));
+    }
+
+    @Test
+    public void testingFindByProdutoIdReturnEmpty() {
+        final var id = 1L;
+
+        try {
+            when(categoriaRepository.findByProdutoId(id)).thenReturn(List.of());
+            categoriaService.findByProdutoId(id);
+        } catch (ObjectNotFoundException e) {
+            final var message = format("Não foi encontrada Categoria com esse id %s de Produto", id);
+            assertEquals(message, e.getLocalizedMessage());
+        }
+    }
+
 }

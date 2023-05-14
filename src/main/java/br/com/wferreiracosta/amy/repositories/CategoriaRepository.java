@@ -9,4 +9,6 @@ public interface CategoriaRepository {
     public List<Categoria> findAll();
     public Categoria findById(Long id);
 
+    public List<Categoria> findByProdutoId(Long id);
+
 }

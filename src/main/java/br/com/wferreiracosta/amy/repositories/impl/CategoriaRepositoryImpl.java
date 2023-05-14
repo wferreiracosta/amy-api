@@ -11,8 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static br.com.wferreiracosta.amy.utils.queries.CategoriaQuery.FIND_ALL_CATEGORIAS;
-import static br.com.wferreiracosta.amy.utils.queries.CategoriaQuery.FIND_CATEGORIA_BY_ID;
+import static br.com.wferreiracosta.amy.utils.queries.CategoriaQuery.*;
 import static java.lang.String.format;
 import static org.springframework.jdbc.core.BeanPropertyRowMapper.newInstance;
 
@@ -39,6 +38,20 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
             log.error(format("Params: %s | Exception: %s | Query: %s | Message: %s", params, e
                     , FIND_CATEGORIA_BY_ID, message));
             return null;
+        }
+    }
+
+    @Override
+    public List<Categoria> findByProdutoId(Long id) {
+        final var params = new MapSqlParameterSource()
+                .addValue("id", id);
+        try {
+            return jdbcTemplate.query(FIND_CATEGORIA_BY_PRODUTO_ID, params, new CategoriaRowMapper());
+        } catch (final Exception e) {
+            final var message = "Erro no momento de buscar categoria pelo id do produto";
+            log.error(format("Params: %s | Exception: %s | Query: %s | Message: %s", params, e
+                    , FIND_CATEGORIA_BY_PRODUTO_ID, message));
+            return List.of();
         }
     }
 
