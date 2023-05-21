@@ -22,11 +22,14 @@ public class CategoriaServiceTest {
     @Mock
     private CategoriaRepository categoriaRepository;
 
+    @Mock
+    private ProdutoService produtoService;
+
     private CategoriaService categoriaService;
 
     @BeforeEach
     public void setUp() {
-        categoriaService = new CategoriaServiceImpl(categoriaRepository);
+        categoriaService = new CategoriaServiceImpl(categoriaRepository, produtoService);
     }
 
     @Test

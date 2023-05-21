@@ -2,6 +2,7 @@ package br.com.wferreiracosta.amy.controllers;
 
 import br.com.wferreiracosta.amy.controllers.impl.CategoriaControllerImpl;
 import br.com.wferreiracosta.amy.models.Categoria;
+import br.com.wferreiracosta.amy.models.CategoriaProdutos;
 import br.com.wferreiracosta.amy.services.CategoriaService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -52,12 +54,12 @@ public class CategoriaControllerTest {
 
     @Test
     public void testingFindByIdReturnCategoria() {
-        final var informatica = Categoria.builder()
+        final var informatica = CategoriaProdutos.builder()
                 .id(1L)
                 .nome("Informatica")
                 .build();
 
-        when(categoriaService.findById(informatica.getId())).thenReturn(informatica);
+        when(categoriaService.findCategoriaWithProdutosById(eq(informatica.getId()))).thenReturn(informatica);
 
         final var returnCategoria = categoriaController.findById(informatica.getId());
 

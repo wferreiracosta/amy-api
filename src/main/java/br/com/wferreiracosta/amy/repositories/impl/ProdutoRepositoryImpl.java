@@ -2,6 +2,7 @@ package br.com.wferreiracosta.amy.repositories.impl;
 
 import br.com.wferreiracosta.amy.models.Produto;
 import br.com.wferreiracosta.amy.repositories.ProdutoRepository;
+import br.com.wferreiracosta.amy.utils.mappers.CategoriaRowMapper;
 import br.com.wferreiracosta.amy.utils.mappers.ProdutoRowMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +11,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import static br.com.wferreiracosta.amy.utils.queries.CategoriaQuery.FIND_CATEGORIA_BY_ID;
+import static br.com.wferreiracosta.amy.utils.queries.CategoriaQuery.FIND_CATEGORIA_BY_PRODUTO_ID;
+import static br.com.wferreiracosta.amy.utils.queries.ProdutoQuery.FIND_PRODUTOS_BY_CATEGORIA_ID;
 import static br.com.wferreiracosta.amy.utils.queries.ProdutoQuery.FIND_PRODUTO_BY_ID;
 import static java.lang.String.format;
+import java.util.List;
 
 @Slf4j
 @Repository
@@ -31,6 +35,20 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
             log.error(format("Params: %s | Exception: %s | Query: %s | Message: %s", params, e
                     , FIND_CATEGORIA_BY_ID, message));
             return null;
+        }
+    }
+
+    @Override
+    public List<Produto> findProdutoByCategoriaId(Long id) {
+        final var params = new MapSqlParameterSource()
+                .addValue("id_categoria", id);
+        try {
+            return jdbcTemplate.query(FIND_PRODUTOS_BY_CATEGORIA_ID, params, new ProdutoRowMapper());
+        } catch (final Exception e) {
+            final var message = "Erro no momento de buscar categoria pelo id do produto";
+            log.error(format("Params: %s | Exception: %s | Query: %s | Message: %s", params, e
+                    , FIND_CATEGORIA_BY_PRODUTO_ID, message));
+            return List.of();
         }
     }
 
