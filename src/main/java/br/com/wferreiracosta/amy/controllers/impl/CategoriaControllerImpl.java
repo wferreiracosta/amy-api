@@ -2,6 +2,7 @@ package br.com.wferreiracosta.amy.controllers.impl;
 
 import br.com.wferreiracosta.amy.controllers.CategoriaController;
 import br.com.wferreiracosta.amy.models.Categoria;
+import br.com.wferreiracosta.amy.models.CategoriaProdutos;
 import br.com.wferreiracosta.amy.services.CategoriaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,8 @@ public class CategoriaControllerImpl implements CategoriaController {
     @Override
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Categoria findById(@PathVariable Long id) {
-        return categoriaService.findById(id);
+    public CategoriaProdutos findById(@PathVariable Long id) {
+        return categoriaService.findCategoriaWithProdutosById(id);
     }
 
 }

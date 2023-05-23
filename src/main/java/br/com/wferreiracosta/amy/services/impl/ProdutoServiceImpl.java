@@ -7,8 +7,13 @@ import br.com.wferreiracosta.amy.repositories.ProdutoRepository;
 import br.com.wferreiracosta.amy.services.CategoriaService;
 import br.com.wferreiracosta.amy.services.ProdutoService;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static br.com.wferreiracosta.amy.utils.mappers.ProdutoCategoriaMapper.map;
 import static java.lang.String.format;
@@ -16,11 +21,16 @@ import static java.util.Objects.isNull;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class ProdutoServiceImpl implements ProdutoService {
 
-    private final ProdutoRepository produtoRepository;
-    private final CategoriaService categoriaService;
+    private ProdutoRepository produtoRepository;
+
+    private CategoriaService categoriaService;
+
+    public ProdutoServiceImpl(ProdutoRepository produtoRepository, @Lazy CategoriaService categoriaService) {
+        this.produtoRepository = produtoRepository;
+        this.categoriaService = categoriaService;
+    }
 
     @Override
     public ProdutoCategoria findByIdWithCategoria(final Long id) {
@@ -40,6 +50,11 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
 
         return produto;
+    }
+
+    @Override
+    public List<Produto> findProdutoByCategoriaId(Long id) {
+        return produtoRepository.findProdutoByCategoriaId(id);
     }
 
 }
