@@ -1,8 +1,10 @@
 package br.com.wferreiracosta.amy.services.impl;
 
+import br.com.wferreiracosta.amy.exceptions.ObjectEmptyException;
 import br.com.wferreiracosta.amy.exceptions.ObjectNotFoundException;
 import br.com.wferreiracosta.amy.models.Categoria;
 import br.com.wferreiracosta.amy.models.CategoriaProdutos;
+import br.com.wferreiracosta.amy.models.parameters.CategoriaParameter;
 import br.com.wferreiracosta.amy.repositories.CategoriaRepository;
 import br.com.wferreiracosta.amy.services.CategoriaService;
 import br.com.wferreiracosta.amy.services.ProdutoService;
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static java.util.Objects.isNull;
+import static org.apache.logging.log4j.util.Strings.isBlank;
+import static org.apache.logging.log4j.util.Strings.isEmpty;
 
 @Slf4j
 @Service
@@ -71,6 +75,11 @@ public class CategoriaServiceImpl implements CategoriaService {
         final var produtos = produtoService.findProdutoByCategoriaId(id);
 
         return CategoriaProdutos.builder().id(categoria.getId()).nome(categoria.getNome()).produtos(produtos).build();
+    }
+
+    @Override
+    public Categoria insert(CategoriaParameter categoriaParameter) {
+        return null;
     }
 
 }
