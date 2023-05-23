@@ -1,17 +1,15 @@
 package br.com.wferreiracosta.amy.services.impl;
 
-import br.com.wferreiracosta.amy.exceptions.ObjectEmptyException;
 import br.com.wferreiracosta.amy.exceptions.ObjectNotFoundException;
+import br.com.wferreiracosta.amy.exceptions.ObjectNotInsertException;
 import br.com.wferreiracosta.amy.models.Categoria;
 import br.com.wferreiracosta.amy.models.CategoriaProdutos;
 import br.com.wferreiracosta.amy.models.parameters.CategoriaParameter;
 import br.com.wferreiracosta.amy.repositories.CategoriaRepository;
 import br.com.wferreiracosta.amy.services.CategoriaService;
 import br.com.wferreiracosta.amy.services.ProdutoService;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +19,6 @@ import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static java.util.Objects.isNull;
-import static org.apache.logging.log4j.util.Strings.isBlank;
-import static org.apache.logging.log4j.util.Strings.isEmpty;
 
 @Slf4j
 @Service
@@ -79,7 +75,15 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     public Categoria insert(CategoriaParameter categoriaParameter) {
-        return null;
+        final var categoria = categoriaRepository.insert(categoriaParameter);
+
+        if (isNull(categoria)) {
+            final var message = format("Erro no momento de cadastrar categoria com o nome %s", categoriaParameter.getNome());
+            log.error(message);
+            throw new ObjectNotInsertException(message);
+        }
+
+        return categoria;
     }
 
 }

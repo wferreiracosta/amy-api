@@ -37,7 +37,7 @@ public class CategoriaControllerImpl implements CategoriaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Categoria insert(@RequestBody @Valid CategoriaParameter categoriaParameter) {
-        return null;
+        return categoriaService.insert(categoriaParameter);
     }
 
 }

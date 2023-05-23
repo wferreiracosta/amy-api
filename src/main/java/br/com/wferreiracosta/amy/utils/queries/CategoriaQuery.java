@@ -14,4 +14,5 @@ public class CategoriaQuery {
     public static final String FIND_CATEGORIA_BY_PRODUTO_ID = "SELECT id, nome FROM amy.categoria c" +
             " INNER JOIN produto_categoria p ON p.id_categoria = c.id WHERE  p.id_produto = :id";
 
+    public static final String INSERT_CATEGORIA = "INSERT INTO categoria(nome) VALUES (:nome)";
 }
