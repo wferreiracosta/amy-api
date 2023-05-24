@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static br.com.wferreiracosta.amy.utils.mappers.CatgoriaMapper.map;
+import static br.com.wferreiracosta.amy.utils.mappers.CategoriaMapper.map;
 import static br.com.wferreiracosta.amy.utils.queries.CategoriaQuery.*;
 import static java.lang.String.format;
 import static org.springframework.jdbc.core.BeanPropertyRowMapper.newInstance;

@@ -8,6 +8,7 @@ import br.com.wferreiracosta.amy.models.parameters.CategoriaParameter;
 import br.com.wferreiracosta.amy.repositories.CategoriaRepository;
 import br.com.wferreiracosta.amy.services.CategoriaService;
 import br.com.wferreiracosta.amy.services.ProdutoService;
+import br.com.wferreiracosta.amy.utils.mappers.CategoriaMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -17,6 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static br.com.wferreiracosta.amy.utils.mappers.CategoriaMapper.map;
 import static java.lang.String.format;
 import static java.util.Objects.isNull;
 
@@ -69,8 +71,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     public CategoriaProdutos findCategoriaWithProdutosById(Long id) {
         final var categoria = findById(id);
         final var produtos = produtoService.findProdutoByCategoriaId(id);
-
-        return CategoriaProdutos.builder().id(categoria.getId()).nome(categoria.getNome()).produtos(produtos).build();
+        return map(categoria, produtos);
     }
 
     @Override
