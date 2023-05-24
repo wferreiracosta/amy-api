@@ -1,16 +1,19 @@
 package br.com.wferreiracosta.amy.repositories.impl;
 
 import br.com.wferreiracosta.amy.models.Categoria;
+import br.com.wferreiracosta.amy.models.parameters.CategoriaParameter;
 import br.com.wferreiracosta.amy.repositories.CategoriaRepository;
 import br.com.wferreiracosta.amy.utils.mappers.CategoriaRowMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static br.com.wferreiracosta.amy.utils.mappers.CategoriaMapper.map;
 import static br.com.wferreiracosta.amy.utils.queries.CategoriaQuery.*;
 import static java.lang.String.format;
 import static org.springframework.jdbc.core.BeanPropertyRowMapper.newInstance;
@@ -21,6 +24,7 @@ import static org.springframework.jdbc.core.BeanPropertyRowMapper.newInstance;
 public class CategoriaRepositoryImpl implements CategoriaRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final GeneratedKeyHolder keyHolder;
 
     @Override
     public List<Categoria> findAll() {
@@ -52,6 +56,21 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
             log.error(format("Params: %s | Exception: %s | Query: %s | Message: %s", params, e
                     , FIND_CATEGORIA_BY_PRODUTO_ID, message));
             return List.of();
+        }
+    }
+
+    @Override
+    public Categoria insert(CategoriaParameter categoriaParameter) {
+        final var params = new MapSqlParameterSource()
+                .addValue("nome", categoriaParameter.getNome());
+        try {
+            jdbcTemplate.update(INSERT_CATEGORIA, params, keyHolder, new String[]{"id"});
+            return map(keyHolder.getKey().longValue(), categoriaParameter.getNome());
+        } catch (Exception e) {
+            final var message = "Erro no momento de inserir uma nova categoria no banco de dados";
+            log.error(format("Params: %s | Exception: %s | Query: %s | Message: %s", params, e
+                    , INSERT_CATEGORIA, message));
+            return null;
         }
     }
 

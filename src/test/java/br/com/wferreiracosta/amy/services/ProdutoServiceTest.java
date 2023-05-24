@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -103,4 +104,29 @@ public class ProdutoServiceTest {
         assertEquals(categorias.get(1), returnProduto.getCategorias().get(1));
     }
 
+    @Test
+    public void testingFindProdutoByCategoria(){
+        final var laptop = Produto.builder()
+                .id(1L)
+                .nome("Laptop")
+                .descricao("Laptop")
+                .preco(new BigDecimal(2000))
+                .build();
+
+        final var panela = Produto.builder()
+                .id(2L)
+                .nome("Panela")
+                .descricao("Panela")
+                .preco(new BigDecimal(2000))
+                .build();
+
+        final var produtos = List.of(laptop, panela);
+        final var categoriaId = 1L;
+
+        when(produtoRepository.findProdutoByCategoriaId(categoriaId)).thenReturn(produtos);
+
+        final var produtosReturnList = produtoService.findProdutoByCategoriaId(categoriaId);
+
+        assertEquals(produtos, produtosReturnList);
+    }
 }
