@@ -18,7 +18,7 @@ Para acessar o PhpMyAdmin basta usar a seguinte URL e dados no navegador
 http://localhost/
 ```
 
-Credenciais:
+#### Credenciais:
 ```
 Banco: mysql
 Login: root
