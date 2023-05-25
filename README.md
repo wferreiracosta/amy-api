@@ -17,9 +17,26 @@ Para acessar o PhpMyAdmin basta usar a seguinte URL e dados no navegador
 ```
 http://localhost/
 ```
+
 Credenciais:
 ```
 Banco: mysql
 Login: root
 Senha: password
 ```
+
+## Endpoints
+
+<table>
+  <tr>
+    <td colspan="2">Categoria</td>
+  </tr>
+  <tr><td>One</td><td>Two</td></tr>
+  <tr><td>One</td><td>Two</td></tr>
+  <tr><td>One</td><td>Two</td></tr>
+  <tr>
+    <td colspan="2">Produto</td>
+  </tr>
+  <tr><td>One</td><td>Two</td></tr>
+  <tr><td>One</td><td>Two</td></tr>
+</table>
