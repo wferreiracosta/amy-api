@@ -1,0 +1,19 @@
+{
+	"info": {
+		"_postman_id": "1b71629f-72d8-4546-be8b-40b9ca49d072",
+		"name": "Produtos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "10332609"
+	},
+	"item": [
+		{
+			"name": "Buscar Produto com categoria pelo id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/produtos/1"
+			},
+			"response": []
+		}
+	]
+}
