@@ -2,11 +2,14 @@ package br.com.wferreiracosta.amy.services.impl;
 
 import br.com.wferreiracosta.amy.exceptions.ObjectNotInsertException;
 import br.com.wferreiracosta.amy.models.Cidade;
+import br.com.wferreiracosta.amy.models.CidadeEstado;
 import br.com.wferreiracosta.amy.repositories.CidadeRepository;
 import br.com.wferreiracosta.amy.services.CidadeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static java.lang.String.format;
 import static java.util.Objects.isNull;
@@ -16,10 +19,10 @@ import static java.util.Objects.isNull;
 @RequiredArgsConstructor
 public class CidadeServiceImpl implements CidadeService {
 
-    private CidadeRepository cidadeRepository;
+    private final CidadeRepository cidadeRepository;
 
     @Override
-    public Cidade findById(Long id) {
+    public CidadeEstado findById(Long id) {
         final var cidade = cidadeRepository.findById(id);
 
         if (isNull(cidade)) {
@@ -29,6 +32,19 @@ public class CidadeServiceImpl implements CidadeService {
         }
 
         return cidade;
+    }
+
+    @Override
+    public List<Cidade> findAllByEstadoUf(String uf) {
+        final var cidades = cidadeRepository.findByEstadoUf(uf);
+
+        if (cidades.isEmpty()) {
+            final var message = format("Não foi encontrado cidade com a uf %s de estado %s", uf);
+            log.error(message);
+            throw new ObjectNotInsertException(message);
+        }
+
+        return cidades;
     }
 
 }

@@ -8,9 +8,10 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class Cidade {
+public class CidadeEstado {
 
     private Long id;
     private String nome;
+    private Estado estado;
 
 }
