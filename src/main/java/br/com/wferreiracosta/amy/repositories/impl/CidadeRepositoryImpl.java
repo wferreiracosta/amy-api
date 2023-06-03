@@ -22,7 +22,7 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class CidadeRepositoryImpl implements CidadeRepository {
 
-    private NamedParameterJdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
     public CidadeEstado findById(Long id) {
