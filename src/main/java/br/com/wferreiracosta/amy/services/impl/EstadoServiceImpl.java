@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.amy.services.impl;
 
+import br.com.wferreiracosta.amy.exceptions.ObjectNotFoundException;
 import br.com.wferreiracosta.amy.exceptions.ObjectNotInsertException;
 import br.com.wferreiracosta.amy.models.Estado;
 import br.com.wferreiracosta.amy.repositories.EstadoRepository;
@@ -16,7 +17,7 @@ import static java.util.Objects.isNull;
 @RequiredArgsConstructor
 public class EstadoServiceImpl implements EstadoService {
 
-    private EstadoRepository estadoRepository;
+    private final EstadoRepository estadoRepository;
 
     @Override
     public Estado findById(Long id) {
@@ -25,7 +26,7 @@ public class EstadoServiceImpl implements EstadoService {
         if (isNull(estado)) {
             final var message = format("Não foi encontrado estado com o id: %s", id);
             log.error(message);
-            throw new ObjectNotInsertException(message);
+            throw new ObjectNotFoundException(message);
         }
 
         return estado;

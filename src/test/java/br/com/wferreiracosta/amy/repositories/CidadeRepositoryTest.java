@@ -93,7 +93,9 @@ public class CidadeRepositoryTest {
         when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), any(CidadeRowMapper.class)))
                 .thenThrow(exception);
 
-        assertNull(cidadeRepository.findByEstadoUf(uf));
+        final var cidadeListReturn = cidadeRepository.findByEstadoUf(uf);
+
+        assertTrue(cidadeListReturn.isEmpty());
     }
 
 }

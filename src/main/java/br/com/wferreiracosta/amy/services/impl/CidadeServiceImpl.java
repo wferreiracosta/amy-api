@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.amy.services.impl;
 
+import br.com.wferreiracosta.amy.exceptions.ObjectNotFoundException;
 import br.com.wferreiracosta.amy.exceptions.ObjectNotInsertException;
 import br.com.wferreiracosta.amy.models.Cidade;
 import br.com.wferreiracosta.amy.models.CidadeEstado;
@@ -28,7 +29,7 @@ public class CidadeServiceImpl implements CidadeService {
         if (isNull(cidade)) {
             final var message = format("Não foi encontrado cidade com o id %s", id);
             log.error(message);
-            throw new ObjectNotInsertException(message);
+            throw new ObjectNotFoundException(message);
         }
 
         return cidade;
@@ -39,9 +40,9 @@ public class CidadeServiceImpl implements CidadeService {
         final var cidades = cidadeRepository.findByEstadoUf(uf);
 
         if (cidades.isEmpty()) {
-            final var message = format("Não foi encontrado cidade com a uf %s de estado %s", uf);
+            final var message = format("Não foi encontrado cidade pertencente a uf %s", uf);
             log.error(message);
-            throw new ObjectNotInsertException(message);
+            throw new ObjectNotFoundException(message);
         }
 
         return cidades;

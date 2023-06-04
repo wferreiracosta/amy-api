@@ -48,7 +48,7 @@ public class CidadeRepositoryImpl implements CidadeRepository {
             final var message = "Erro no momento de buscar cidade pela uf";
             log.error(format("Params: %s | Exception: %s | Query: %s | Message: %s", params, e
                     , FIND_ALL_CIDADES_BY_ESTADO_UF, message));
-            return null;
+            return List.of();
         }
     }
 
