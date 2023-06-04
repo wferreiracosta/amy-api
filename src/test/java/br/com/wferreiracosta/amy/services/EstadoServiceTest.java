@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-public class EstadoServiceTest {
+class EstadoServiceTest {
 
     @Mock
     private EstadoRepository estadoRepository;
@@ -21,13 +21,13 @@ public class EstadoServiceTest {
     private EstadoService estadoService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         openMocks(this);
         estadoService = new EstadoServiceImpl(estadoRepository);
     }
 
     @Test
-    public void testingFindByIdWithSucess() {
+    void testingFindByIdWithSucess() {
         final var estado = Estado.builder().id(1L).nome("São Paulo").uf("SP").build();
 
         when(estadoRepository.findById(estado.getId())).thenReturn(estado);
@@ -38,7 +38,7 @@ public class EstadoServiceTest {
     }
 
     @Test
-    public void testingFindByIdWithException() {
+    void testingFindByIdWithException() {
         final var idEstado = 1L;
 
         when(estadoRepository.findById(idEstado)).thenReturn(null);

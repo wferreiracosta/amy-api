@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface CategoriaRepository {
 
-    public List<Categoria> findAll();
-    public Categoria findById(Long id);
+    List<Categoria> findAll();
+    Categoria findById(Long id);
 
-    public List<Categoria> findByProdutoId(Long id);
+    List<Categoria> findByProdutoId(Long id);
 
-    public Categoria insert(CategoriaParameter categoriaParameter);
+    Long insert(CategoriaParameter categoriaParameter);
 
 }

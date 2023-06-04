@@ -2,7 +2,6 @@ package br.com.wferreiracosta.amy.controllers.impl;
 
 import br.com.wferreiracosta.amy.controllers.ProdutoController;
 import br.com.wferreiracosta.amy.models.ProdutoCategoria;
-import br.com.wferreiracosta.amy.services.CategoriaService;
 import br.com.wferreiracosta.amy.services.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

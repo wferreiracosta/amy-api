@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import static java.lang.String.format;
 import static java.util.List.of;
@@ -22,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CategoriaServiceTest {
+class CategoriaServiceTest {
 
     @Mock
     private CategoriaRepository categoriaRepository;
@@ -33,12 +32,12 @@ public class CategoriaServiceTest {
     private CategoriaService categoriaService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         categoriaService = new CategoriaServiceImpl(categoriaRepository, produtoService);
     }
 
     @Test
-    public void testingFindAllReturnAllCategorias() {
+    void testingFindAllReturnAllCategorias() {
         final var informatica = Categoria.builder()
                 .id(1L)
                 .nome("Informatica")
@@ -60,7 +59,7 @@ public class CategoriaServiceTest {
     }
 
     @Test
-    public void testingFindByIdReturnCategoria() {
+    void testingFindByIdReturnCategoria() {
         final var informatica = Categoria.builder()
                 .id(1L)
                 .nome("Informatica")
@@ -75,7 +74,7 @@ public class CategoriaServiceTest {
     }
 
     @Test
-    public void testingFindByIdReturnException() {
+    void testingFindByIdReturnException() {
         final var id = 1L;
         final var messageException = format("Não foi encontrada Categoria com esse id: %s", id);
 
@@ -90,7 +89,7 @@ public class CategoriaServiceTest {
     }
 
     @Test
-    public void testingFindByProdutoIdReturnCategorias() {
+    void testingFindByProdutoIdReturnCategorias() {
         final var id = 1L;
 
         final var informatica = Categoria.builder()
@@ -114,7 +113,7 @@ public class CategoriaServiceTest {
     }
 
     @Test
-    public void testingFindByProdutoIdReturnEmpty() {
+    void testingFindByProdutoIdReturnEmpty() {
         final var id = 1L;
 
         try {
@@ -127,7 +126,7 @@ public class CategoriaServiceTest {
     }
 
     @Test
-    public void testingFindCategoriaWithProdutosById() {
+    void testingFindCategoriaWithProdutosById() {
         final var categoria = Categoria.builder()
                 .id(1L)
                 .nome("Informatica")
@@ -162,7 +161,7 @@ public class CategoriaServiceTest {
     }
 
     @Test
-    public void testingInserNewCategoriaWithSucess(){
+    void testingInserNewCategoriaWithSucess(){
         final var categoria = Categoria.builder()
                 .id(1L)
                 .nome("Informatica")
@@ -172,15 +171,16 @@ public class CategoriaServiceTest {
                 .nome("Informatica")
                 .build();
 
-        when(categoriaRepository.insert(param)).thenReturn(categoria);
+        when(categoriaRepository.insert(param)).thenReturn(categoria.getId());
 
         final var newCategoria = categoriaService.insert(param);
 
-        assertEquals(categoria, newCategoria);
+        assertEquals(categoria.getId(), newCategoria.getId());
+        assertEquals(categoria.getNome(), newCategoria.getNome());
     }
 
     @Test
-    public void testingInserNewCategoriaReturnException(){
+    void testingInserNewCategoriaReturnException(){
         final var param = CategoriaParameter.builder()
                 .nome("Informatica")
                 .build();

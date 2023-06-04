@@ -15,11 +15,10 @@ import java.util.List;
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-public class CidadeServiceTest {
+class CidadeServiceTest {
 
     @Mock
     private CidadeRepository cidadeRepository;
@@ -27,13 +26,13 @@ public class CidadeServiceTest {
     private CidadeService cidadeService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         openMocks(this);
         cidadeService = new CidadeServiceImpl(cidadeRepository);
     }
 
     @Test
-    public void testFindByIdWithSucess() {
+    void testFindByIdWithSucess() {
         final var estado = Estado.builder()
                 .id(1L)
                 .nome("São Paulo")
@@ -56,7 +55,7 @@ public class CidadeServiceTest {
     }
 
     @Test
-    public void testFindByIdWithException() {
+    void testFindByIdWithException() {
         final var cidadeId = 1L;
         when(cidadeRepository.findById(cidadeId)).thenReturn(null);
         try {
@@ -68,7 +67,7 @@ public class CidadeServiceTest {
     }
 
     @Test
-    public void testFindAllByEstadoUfWithSucess(){
+    void testFindAllByEstadoUfWithSucess(){
         final var saoPaulo = Cidade.builder().id(1L).nome("São Paulo").build();
         final var campinas = Cidade.builder().id(2L).nome("Campinas").build();
         final var cidades = List.of(saoPaulo, campinas);
@@ -85,7 +84,7 @@ public class CidadeServiceTest {
     }
 
     @Test
-    public void testFindAllByEstadoUfWithException(){
+    void testFindAllByEstadoUfWithException(){
         final var uf = "SP";
 
         when(cidadeRepository.findByEstadoUf(uf)).thenReturn(List.of());

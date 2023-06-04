@@ -13,9 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static br.com.wferreiracosta.amy.utils.mappers.CategoriaMapper.map;
 import static br.com.wferreiracosta.amy.utils.queries.CategoriaQuery.*;
 import static java.lang.String.format;
+import static java.util.Objects.isNull;
 import static org.springframework.jdbc.core.BeanPropertyRowMapper.newInstance;
 
 @Slf4j
@@ -39,8 +39,7 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
             return jdbcTemplate.queryForObject(FIND_CATEGORIA_BY_ID, params, new CategoriaRowMapper());
         } catch (final Exception e) {
             final var message = "Erro no momento de buscar categoria por id";
-            log.error(format("Params: %s | Exception: %s | Query: %s | Message: %s", params, e
-                    , FIND_CATEGORIA_BY_ID, message));
+            log.error(getLogMessage(params, e, FIND_CATEGORIA_BY_ID, message));
             return null;
         }
     }
@@ -53,25 +52,34 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
             return jdbcTemplate.query(FIND_CATEGORIA_BY_PRODUTO_ID, params, new CategoriaRowMapper());
         } catch (final Exception e) {
             final var message = "Erro no momento de buscar categoria pelo id do produto";
-            log.error(format("Params: %s | Exception: %s | Query: %s | Message: %s", params, e
-                    , FIND_CATEGORIA_BY_PRODUTO_ID, message));
+            log.error(getLogMessage(params, e, FIND_CATEGORIA_BY_PRODUTO_ID, message));
             return List.of();
         }
     }
 
     @Override
-    public Categoria insert(CategoriaParameter categoriaParameter) {
+    public Long insert(CategoriaParameter categoriaParameter) {
         final var params = new MapSqlParameterSource()
                 .addValue("nome", categoriaParameter.getNome());
         try {
             jdbcTemplate.update(INSERT_CATEGORIA, params, keyHolder, new String[]{"id"});
-            return map(keyHolder.getKey().longValue(), categoriaParameter.getNome());
+            final var key = keyHolder.getKey();
+
+            if (isNull(key)) {
+                throw new IllegalArgumentException("Não foi possivel inserir nova categoria");
+            }
+
+            return key.longValue();
         } catch (Exception e) {
             final var message = "Erro no momento de inserir uma nova categoria no banco de dados";
-            log.error(format("Params: %s | Exception: %s | Query: %s | Message: %s", params, e
-                    , INSERT_CATEGORIA, message));
+            log.error(getLogMessage(params, e, INSERT_CATEGORIA, message));
             return null;
         }
     }
+
+    private String getLogMessage(MapSqlParameterSource params, Exception e, String query, String message) {
+        return format("Params: %s | Exception: %s | Query: %s | Message: %s", params, e, query, message);
+    }
+
 
 }

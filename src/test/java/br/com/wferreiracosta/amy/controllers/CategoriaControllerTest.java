@@ -14,11 +14,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CategoriaControllerTest {
+class CategoriaControllerTest {
 
     @Mock
     private CategoriaService categoriaService;
@@ -26,12 +25,12 @@ public class CategoriaControllerTest {
     private CategoriaController categoriaController;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         categoriaController = new CategoriaControllerImpl(categoriaService);
     }
 
     @Test
-    public void testingFindAllReturnAllCategorias() {
+    void testingFindAllReturnAllCategorias() {
         final var informatica = Categoria.builder()
                 .id(1L)
                 .nome("Informatica")
@@ -53,13 +52,13 @@ public class CategoriaControllerTest {
     }
 
     @Test
-    public void testingFindByIdReturnCategoria() {
+    void testingFindByIdReturnCategoria() {
         final var informatica = CategoriaProdutos.builder()
                 .id(1L)
                 .nome("Informatica")
                 .build();
 
-        when(categoriaService.findCategoriaWithProdutosById(eq(informatica.getId()))).thenReturn(informatica);
+        when(categoriaService.findCategoriaWithProdutosById(informatica.getId())).thenReturn(informatica);
 
         final var returnCategoria = categoriaController.findById(informatica.getId());
 

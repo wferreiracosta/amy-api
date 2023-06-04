@@ -28,7 +28,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CategoriaRepositoryTest {
+class CategoriaRepositoryTest {
 
     @Mock
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -39,12 +39,12 @@ public class CategoriaRepositoryTest {
     private CategoriaRepository categoriaRepository;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         categoriaRepository = new CategoriaRepositoryImpl(jdbcTemplate, keyHolder);
     }
 
     @Test
-    public void testingFindAllReturnAllCategorias() {
+    void testingFindAllReturnAllCategorias() {
         final var informatica = Categoria.builder().id(1L).nome("Informatica").build();
 
         final var roupa = Categoria.builder().id(2L).nome("Roupa").build();
@@ -60,7 +60,7 @@ public class CategoriaRepositoryTest {
     }
 
     @Test
-    public void testingFindByIdReturnCategoria() {
+    void testingFindByIdReturnCategoria() {
         final var informatica = Categoria.builder().id(1L).nome("Informatica").build();
 
         when(jdbcTemplate.queryForObject(anyString(), any(MapSqlParameterSource.class), any(CategoriaRowMapper.class))).thenReturn(informatica);
@@ -72,7 +72,7 @@ public class CategoriaRepositoryTest {
     }
 
     @Test
-    public void testingFindByIdReturnNull() {
+    void testingFindByIdReturnNull() {
         final var exception = mock(ObjectNotFoundException.class);
 
         when(jdbcTemplate.queryForObject(anyString(), any(MapSqlParameterSource.class), any(CategoriaRowMapper.class))).thenThrow(exception);
@@ -85,7 +85,7 @@ public class CategoriaRepositoryTest {
     }
 
     @Test
-    public void testingFindByProdutoIdReturnCategorias() {
+    void testingFindByProdutoIdReturnCategorias() {
         final var id = 1L;
 
         final var informatica = Categoria.builder().id(1L).nome("Informatica").build();
@@ -103,7 +103,7 @@ public class CategoriaRepositoryTest {
     }
 
     @Test
-    public void testingFindByProdutoIdReturnEmpty() {
+    void testingFindByProdutoIdReturnEmpty() {
         final var id = 1L;
 
         final var exception = mock(ObjectNotFoundException.class);
@@ -115,7 +115,7 @@ public class CategoriaRepositoryTest {
     }
 
     @Test
-    public void testingInserNewCategoriaWithSucess() {
+    void testingInserNewCategoriaWithSucess() {
         final var categoria = Categoria.builder().id(1L).nome("Informatica").build();
 
         final var param = CategoriaParameter.builder().nome("Informatica").build();
@@ -125,14 +125,13 @@ public class CategoriaRepositoryTest {
         when(keyHolder.getKey()).thenReturn(categoria.getId());
         when(keyHolder.getKey().longValue()).thenReturn(categoria.getId());
 
-        final var newCategoria = categoriaRepository.insert(param);
+        final var categoriaIdInsert = categoriaRepository.insert(param);
 
-        assertEquals(categoria.getId(), newCategoria.getId());
-        assertEquals(categoria.getNome(), newCategoria.getNome());
+        assertEquals(categoria.getId(), categoriaIdInsert);
     }
 
     @Test
-    public void testingInserNewCategoriaReturnException() {
+    void testingInserNewCategoriaReturnException() {
         final var exception = mock(DataAccessException.class);
         final var param = CategoriaParameter.builder().nome("Informatica").build();
 

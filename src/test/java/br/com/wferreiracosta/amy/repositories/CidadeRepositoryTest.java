@@ -22,7 +22,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-public class CidadeRepositoryTest {
+class CidadeRepositoryTest {
 
     @Mock
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -30,13 +30,13 @@ public class CidadeRepositoryTest {
     private CidadeRepository cidadeRepository;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         openMocks(this);
         cidadeRepository = new CidadeRepositoryImpl(jdbcTemplate);
     }
 
     @Test
-    public void testingByIdWithSucess() {
+    void testingByIdWithSucess() {
         final var estado = Estado.builder()
                 .id(1L)
                 .nome("São Paulo")
@@ -58,7 +58,7 @@ public class CidadeRepositoryTest {
     }
 
     @Test
-    public void testingByIdReturnNull() {
+    void testingByIdReturnNull() {
         final var exception = mock(ObjectNotFoundException.class);
 
         when(jdbcTemplate.queryForObject(anyString(), any(MapSqlParameterSource.class), any(CidadeEstadoRowMapper.class)))
@@ -68,7 +68,7 @@ public class CidadeRepositoryTest {
     }
 
     @Test
-    public void testingFindByEstadoUfWithSucess() {
+    void testingFindByEstadoUfWithSucess() {
         final var saoPaulo = Cidade.builder().id(1L).nome("São Paulo").build();
         final var campinas = Cidade.builder().id(2L).nome("Campinas").build();
         final var cidades = List.of(saoPaulo, campinas);
@@ -86,7 +86,7 @@ public class CidadeRepositoryTest {
     }
 
     @Test
-    public void testingFindByEstadoUfReturnNull() {
+    void testingFindByEstadoUfReturnNull() {
         final var exception = mock(ObjectNotFoundException.class);
         final var uf = "SP";
 

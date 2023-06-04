@@ -25,7 +25,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ProdutoRepositoryTest {
+class ProdutoRepositoryTest {
 
     @Mock
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -33,12 +33,12 @@ public class ProdutoRepositoryTest {
     private ProdutoRepository produtoRepository;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         produtoRepository = new ProdutoRepositoryImpl(jdbcTemplate);
     }
 
     @Test
-    public void testingFindById() {
+    void testingFindById() {
         final var laptop = Produto.builder()
                 .id(1L)
                 .nome("laptop")
@@ -58,7 +58,7 @@ public class ProdutoRepositoryTest {
     }
 
     @Test
-    public void testingFindByIdReturnException() {
+    void testingFindByIdReturnException() {
         final var exception = mock(ObjectNotFoundException.class);
         final var id = 1L;
 
@@ -69,7 +69,7 @@ public class ProdutoRepositoryTest {
     }
 
     @Test
-    public void testingFindProdutoByCategoriaIdReturnSucess() {
+    void testingFindProdutoByCategoriaIdReturnSucess() {
         final var laptop = Produto.builder()
                 .id(1L)
                 .nome("Laptop")
@@ -96,7 +96,7 @@ public class ProdutoRepositoryTest {
     }
 
     @Test
-    public void testingFindProdutosByCategoriaIdReturnEmptyList() {
+    void testingFindProdutosByCategoriaIdReturnEmptyList() {
         final var expection = mock(DataAccessException.class);
         final var categoriaId = 1L;
 
