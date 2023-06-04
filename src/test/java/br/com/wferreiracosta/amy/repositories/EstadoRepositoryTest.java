@@ -18,7 +18,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-public class EstadoRepositoryTest {
+class EstadoRepositoryTest {
 
     @Mock
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -26,13 +26,13 @@ public class EstadoRepositoryTest {
     private EstadoRepository estadoRepository;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         openMocks(this);
         estadoRepository = new EstadoRepositoryImpl(jdbcTemplate);
     }
 
     @Test
-    public void testingFindByIdWithSucess() {
+    void testingFindByIdWithSucess() {
         final var estado = Estado.builder()
                 .id(1L)
                 .nome("São Paulo")
@@ -48,7 +48,7 @@ public class EstadoRepositoryTest {
     }
 
     @Test
-    public void testingFindByIdReturnNull() {
+    void testingFindByIdReturnNull() {
         final var exception = mock(ObjectNotFoundException.class);
 
         when(jdbcTemplate.queryForObject(anyString(), any(MapSqlParameterSource.class), any(EstadoRowMapper.class)))

@@ -8,7 +8,6 @@ import br.com.wferreiracosta.amy.models.parameters.CategoriaParameter;
 import br.com.wferreiracosta.amy.repositories.CategoriaRepository;
 import br.com.wferreiracosta.amy.services.CategoriaService;
 import br.com.wferreiracosta.amy.services.ProdutoService;
-import br.com.wferreiracosta.amy.utils.mappers.CategoriaMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -26,9 +25,9 @@ import static java.util.Objects.isNull;
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
 
-    private CategoriaRepository categoriaRepository;
+    private final CategoriaRepository categoriaRepository;
 
-    private ProdutoService produtoService;
+    private final ProdutoService produtoService;
 
     public CategoriaServiceImpl(CategoriaRepository categoriaRepository, @Lazy ProdutoService produtoService) {
         this.categoriaRepository = categoriaRepository;
@@ -76,15 +75,15 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     public Categoria insert(CategoriaParameter categoriaParameter) {
-        final var categoria = categoriaRepository.insert(categoriaParameter);
+        final var id = categoriaRepository.insert(categoriaParameter);
 
-        if (isNull(categoria)) {
+        if (isNull(id)) {
             final var message = format("Erro no momento de cadastrar categoria com o nome %s", categoriaParameter.getNome());
             log.error(message);
             throw new ObjectNotInsertException(message);
         }
 
-        return categoria;
+        return map(id, categoriaParameter.getNome());
     }
 
 }

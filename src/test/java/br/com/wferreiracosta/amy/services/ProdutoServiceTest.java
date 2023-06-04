@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -20,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ProdutoServiceTest {
+class ProdutoServiceTest {
 
     @Mock
     private ProdutoRepository produtoRepository;
@@ -31,12 +30,12 @@ public class ProdutoServiceTest {
     private ProdutoService produtoService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         produtoService = new ProdutoServiceImpl(produtoRepository, categoriaService);
     }
 
     @Test
-    public void testingfindByIdReturnProduto() {
+    void testingfindByIdReturnProduto() {
         final var produto = Produto.builder()
                 .id(1L)
                 .nome("Laptop")
@@ -55,7 +54,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void testingfindByIdReturnException() {
+    void testingfindByIdReturnException() {
         final var id = 1L;
 
         when(produtoRepository.findById(id)).thenReturn(null);
@@ -70,7 +69,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void testingFindByIdWithCategoria() {
+    void testingFindByIdWithCategoria() {
         final var informatica = Categoria.builder()
                 .id(1L)
                 .nome("Informatica")
@@ -105,7 +104,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void testingFindProdutoByCategoria(){
+    void testingFindProdutoByCategoria() {
         final var laptop = Produto.builder()
                 .id(1L)
                 .nome("Laptop")

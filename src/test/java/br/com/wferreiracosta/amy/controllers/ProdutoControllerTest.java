@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ProdutoControllerTest {
+class ProdutoControllerTest {
 
     @Mock
     private ProdutoService produtoService;
@@ -25,12 +25,12 @@ public class ProdutoControllerTest {
     private ProdutoController controller;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         controller = new ProdutoControllerImpl(produtoService);
     }
 
     @Test
-    public void testingFindById() {
+    void testingFindById() {
         final var informatica = Categoria.builder()
                 .id(1L)
                 .nome("Informatica")
