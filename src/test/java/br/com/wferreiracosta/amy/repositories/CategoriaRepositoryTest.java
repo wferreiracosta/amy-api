@@ -131,6 +131,28 @@ class CategoriaRepositoryTest {
     }
 
     @Test
+    void testingInserNewCategoriaReturnKeyNull() {
+        final var categoria = Categoria.builder().id(1L).nome("Informatica").build();
+
+        final var param = CategoriaParameter.builder().nome("Informatica").build();
+
+        when(keyHolder.getKey()).thenReturn(null);
+
+        when(jdbcTemplate.update(eq(INSERT_CATEGORIA),
+                any(MapSqlParameterSource.class),
+                any(GeneratedKeyHolder.class),
+                eq(new String[]{"id"}))).thenReturn(1);
+
+
+        try{
+            categoriaRepository.insert(param);
+        }catch (final IllegalArgumentException e){
+            final var message = "Erro no momento de obter id quando foi inserir uma nova categoria no banco de dados";
+            assertEquals(message, e.getLocalizedMessage());
+        }
+    }
+
+    @Test
     void testingInserNewCategoriaReturnException() {
         final var exception = mock(DataAccessException.class);
         final var param = CategoriaParameter.builder().nome("Informatica").build();

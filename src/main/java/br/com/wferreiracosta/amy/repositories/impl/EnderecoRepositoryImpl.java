@@ -29,20 +29,21 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
                 .addValue("bairro", endereco.getBairro())
                 .addValue("idCidade", endereco.getIdCidade())
                 .addValue("ddd", endereco.getDdd());
-        final var message = "Nao foi possivel inserir o endereco";
 
         try {
             jdbcTemplate.update(INSERT_ENDERECO, params, keyHolder, new String[]{"id"});
             final var key = keyHolder.getKey();
 
             if (isNull(key)) {
-                final var exception = new IllegalArgumentException("Nao foi possivel inserir o endereco");
+                final var message = "Nao foi possivel obter id inserido";
+                final var exception = new IllegalArgumentException(message);
                 log.error(getLogMessage(params, exception, INSERT_ENDERECO, message));
                 throw exception;
             }
 
             return key.longValue();
         } catch (Exception e) {
+            final var message = "Nao foi possivel inserir o endereco";
             log.error(getLogMessage(params, e, INSERT_ENDERECO, message));
             return null;
         }
