@@ -66,7 +66,10 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
             final var key = keyHolder.getKey();
 
             if (isNull(key)) {
-                throw new IllegalArgumentException("Não foi possivel inserir nova categoria");
+                final var message = "Erro no momento de obter id quando foi inserir uma nova categoria no banco de dados";
+                final var exception = new IllegalArgumentException(message);
+                log.error(getLogMessage(params, exception, INSERT_CATEGORIA, message));
+                throw exception;
             }
 
             return key.longValue();
